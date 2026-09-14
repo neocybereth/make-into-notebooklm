@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Make into NotebookLM</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header><span class="mark" aria-hidden="true">↗</span><span>YouTube → NotebookLM</span></header>
+  <h1>A video. A new notebook.</h1>
+  <p>Send this video to NotebookLM, ready to explore.</p>
+  <div class="video"><span class="eyebrow">CURRENT VIDEO</span><strong id="title">Checking this tab…</strong><span id="url"></span></div>
+  <button id="make" disabled>Make into NotebookLM <span aria-hidden="true">↗</span></button>
+  <p id="status" role="status" aria-live="polite"></p>
+  <footer>Also in your YouTube right-click menu.<br><span id="shortcut">Shortcut: Option + N on Mac</span></footer>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

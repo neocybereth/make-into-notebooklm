@@ -1,0 +1,7 @@
+node_modules/
+artifacts/
+.DS_Store
+VERIFICATION.md
+.env
+.env.*
+!.env.example
