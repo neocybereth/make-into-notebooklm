@@ -6,8 +6,8 @@ import { JSDOM } from "jsdom";
 const script = await readFile(new URL("../extension/importer.js", import.meta.url), "utf8");
 const url = "https://www.youtube.com/watch?v=abcdefghijk";
 
-function fixture(t, phase = "ready") {
-  const dom = new JSDOM('<button aria-label="Create new notebook">add Create new</button>', {
+function fixture(t, phase = "ready", createLabel = "Create new notebook") {
+  const dom = new JSDOM(`<button aria-label="${createLabel}"><mat-icon aria-hidden="true">add_2</mat-icon>${createLabel}</button>`, {
     url: "https://notebook.google.com/", runScripts: "outside-only",
   });
   t.after(() => dom.window.close());
@@ -69,20 +69,22 @@ async function until(check) {
   assert.fail("Importer did not reach expected state");
 }
 
-test("creates notebook, opens Websites, fills via input events and submits exactly once", async (t) => {
-  const { window, state, start } = fixture(t);
-  window.document.querySelector("button").onclick = () => {
-    state.creates++;
-    window.history.pushState({}, "", "/notebook/new-test?addSource=true");
-    websites(window, state);
-  };
-  start();
-  await until(() => state.completed);
-  assert.equal(state.creates, 1);
-  assert.deepEqual(state.submissions, [url]);
-  assert.deepEqual(state.prompts, ["summarize"]);
-  assert.deepEqual(state.messages.map((message) => message.type), ["get-job", "advance", "advance", "advance", "advance", "finish"]);
-});
+for (const createLabel of ["New notebook", "Create notebook", "Create new notebook"]) {
+  test(`creates via ${createLabel}, imports the video and summarizes exactly once`, async (t) => {
+    const { window, state, start } = fixture(t, "ready", createLabel);
+    window.document.querySelector("button").onclick = () => {
+      state.creates++;
+      window.history.pushState({}, "", "/notebook/new-test?addSource=true");
+      websites(window, state);
+    };
+    start();
+    await until(() => state.completed);
+    assert.equal(state.creates, 1);
+    assert.deepEqual(state.submissions, [url]);
+    assert.deepEqual(state.prompts, ["summarize"]);
+    assert.deepEqual(state.messages.map((message) => message.type), ["get-job", "advance", "advance", "advance", "advance", "finish"]);
+  });
+}
 
 test("resumes after notebook navigation without creating another notebook", async (t) => {
   const { window, state, start } = fixture(t, "creating");
