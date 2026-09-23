@@ -51,7 +51,7 @@
 
   async function createNotebook(job) {
     if (job.phase === "ready") {
-      const create = await waitFor(() => findButton(/^Create (?:new )?notebook$/i), "Create notebook");
+      const create = await waitFor(() => findButton(/^(?:Create (?:new )?|New )notebook$/i), "New notebook");
       await advance(job, "creating");
       create.click();
     }

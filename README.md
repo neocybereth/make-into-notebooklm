@@ -4,7 +4,7 @@ A small, local Chrome extension that creates a new NotebookLM notebook from the 
 
 ## Install once
 
-1. Download this repository using **Code → Download ZIP** and extract it, or clone it with Git.
+1. Download and extract the extension ZIP from the [latest release](https://github.com/neocybereth/make-into-notebooklm/releases/latest), or clone this repository with Git.
 2. Open `chrome://extensions` in your normal, signed-in Chrome profile.
 3. Enable **Developer mode** at the top right.
 4. Click **Load unpacked** and select the `extension` folder inside the downloaded repository.
@@ -27,11 +27,13 @@ Each action creates a **new notebook**. Regular videos, Shorts, live-video URLs,
 ```text
 YouTube → right-click / toolbar / shortcut
         → new NotebookLM tab
-        → Create new notebook → Websites → paste URL → Insert
+        → New notebook → Websites → paste URL → Insert
         → wait for source processing → type summarize → chat Submit
 ```
 
 The extension uses your signed-in Chrome profile and NotebookLM's normal web interface. It supports `notebook.google.com` and `notebooklm.google.com`. The current UI calls the product Gemini Notebook; the extension keeps the requested NotebookLM name.
+
+Version **1.1.2** supports the renamed **New notebook** button as well as the previous **Create notebook** and **Create new notebook** labels. If version 1.1.1 stops on the homepage, update the extension folder and click **Reload** on `chrome://extensions`, then invoke it again from YouTube.
 
 Google processes the video after submission. Public videos with available transcripts are supported; private videos, missing captions, recent uploads, and source/account limits can prevent import. The extension waits up to five minutes for a selected, usable source and the chat box, then submits **summarize**. It leaves existing chat drafts alone. If processing takes longer, send **summarize** manually when the source is ready. See [Google's source-import help](https://support.google.com/gemininotebook/answer/16215270).
 
